@@ -7,6 +7,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CloudnaryModule } from './cloudnary/cloudnary.module';
 import { FileTable } from './upload/entities/file.entity';
+import { MailService } from './mail/mail.service';
+import { MailModule } from './mail/mail.module';
 @Module({
   imports: [ConfigModule.forRoot({
       isGlobal: true,
@@ -24,8 +26,8 @@ import { FileTable } from './upload/entities/file.entity';
         entities: [FileTable],
       
         synchronize: true,
-      })}),UploadModule, CloudnaryModule],
+      })}),UploadModule, CloudnaryModule, MailModule],
   controllers: [AppController],
-  providers: [AppService, CloudnaryService],
+  providers: [AppService, CloudnaryService, MailService],
 })
 export class AppModule {}

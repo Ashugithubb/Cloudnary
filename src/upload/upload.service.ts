@@ -11,6 +11,7 @@ export class UploadService {
 
 
     async SaveMetaDate(file: Express.Multer.File, url: string) {
+        console.log(url)
         const size = (Number)(file.size)
         const kb = Math.round(size / 1024);
         const data = {
@@ -23,15 +24,17 @@ export class UploadService {
         return url;
     }
     async uploadFile(file: Express.Multer.File) {
+          const local = 'http://localhost:3000/files/'+file.filename;
         const size = Number(file.size) * 1024;
         if (size > 10) {
-            await this.SaveMetaDate(file, file.path);
+            await this.SaveMetaDate(file, local);
         }
         else {
             try {
                 const result = await this.cloud.uploadFileFromPath(file.path);
                 await fs.unlink(file.path);
-                return await this.SaveMetaDate(file, result)
+              
+                return await this.SaveMetaDate(file, local)
             }
             catch (error) {
                 throw new Error("Failed to upload image")

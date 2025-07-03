@@ -20,6 +20,7 @@ constructor(){
              const uploadResult = await cloudinary.uploader.upload(path, {
               folder: 'zenmonk',
               });
+             
               return uploadResult.secure_url;
              } 
              catch (error) {
